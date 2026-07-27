@@ -2,7 +2,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@nuxt/content'],
+  modules: ['@nuxt/content', '@nuxtjs/sitemap'],
   devtools: { enabled: true },
   future: { compatibilityVersion: 4 },
   compatibilityDate: '2026-01-01',
@@ -56,5 +56,10 @@ export default defineNuxtConfig({
         }
       }
     }
-  }
+  },
+
+  site: {
+    url: 'https://kosmosafive.github.io/',
+    name: 'dev/blog — статьи о веб-разработке'
+  },
 })
