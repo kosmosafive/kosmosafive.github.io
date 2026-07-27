@@ -29,6 +29,40 @@ function formatDate(date: string) {
     day: 'numeric'
   })
 }
+
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        'headline': post.value.title,
+        'description': post.value.description,
+        'datePublished': post.value.date,
+        'dateModified': post.value.updated || post.value.date,
+        'image': post.value.image ? `https://kosmosafive.github.io${post.value.image}` : undefined,
+        'author': {
+          '@type': 'Person',
+          'name': 'Siarhei Buinevich',
+          'url': 'https://kosmosafive.github.io/'
+        },
+        'publisher': {
+          '@type': 'Organization',
+          'name': 'kosmosafive.github.io',
+          'logo': {
+            '@type': 'ImageObject',
+            'url': 'https://kosmosafive.github.io/favicon.svg'
+          }
+        },
+        'mainEntityOfPage': {
+          '@type': 'WebPage',
+          '@id': `https://kosmosafive.github.io${useRoute().path}`
+        }
+      })
+    }
+  ]
+})
 </script>
 
 <template>
