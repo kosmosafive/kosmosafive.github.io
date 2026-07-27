@@ -8,7 +8,7 @@ const profile = {
   name: 'Siarhei Buinevich',
   role: 'Web developer',
   avatar: '/avatar.png',
-  bio: ''
+  bio: 'Более 10 лет в backend-разработке: от интернет-магазинов и корпоративных порталов до микросервисов, интегрированных с SAP, CRM и внешними API промышленных и логистических компаний.'
 }
 
 const socials = [
@@ -26,6 +26,44 @@ const socials = [
     name: 'LinkedIn',
     href: 'https://www.linkedin.com/in/siarhei-bunevich/',
     icon: 'M20.47,2H3.53A1.45,1.45,0,0,0,2.06,3.43V20.57A1.45,1.45,0,0,0,3.53,22H20.47a1.45,1.45,0,0,0,1.47-1.43V3.43A1.45,1.45,0,0,0,20.47,2ZM8.09,18.74h-3v-9h3ZM6.59,8.48h0a1.56,1.56,0,1,1,0-3.12,1.57,1.57,0,1,1,0,3.12ZM18.91,18.74h-3V13.91c0-1.21-.43-2-1.52-2A1.65,1.65,0,0,0,12.85,13a2,2,0,0,0-.1.73v5h-3s0-8.18,0-9h3V11A3,3,0,0,1,15.46,9.5c2,0,3.45,1.29,3.45,4.06Z'
+  }
+]
+
+const skillGroups = [
+  {
+    title: 'Backend и архитектура',
+    skills: [
+      'PHP', 'ООП, SOLID, KISS, YAGNI, DRY', 'Паттерны GoF', 'DDD', 'Event Sourcing',
+      'Clean Architecture', 'REST API', 'OpenAPI / Swagger', 'Микросервисы', 'PSR-12, PSR-4'
+    ]
+  },
+  {
+    title: 'Фреймворки',
+    skills: ['Bitrix Framework', 'Symfony', 'Laravel', 'Slim Framework']
+  },
+  {
+    title: 'Данные и хранилища',
+    skills: ['MySQL / MariaDB', 'PostgreSQL', 'ElasticSearch / OpenSearch', 'Redis', 'ClickHouse', 'ORM, миграции']
+  },
+  {
+    title: 'Интеграции и messaging',
+    skills: ['Apache Kafka', 'RabbitMQ', 'GraphQL, WebSocket', 'OAuth2, JWT', 'Symfony Messenger']
+  },
+  {
+    title: 'DevOps и инфраструктура',
+    skills: ['Docker', 'CI/CD', 'Git', 'Nginx', 'Prometheus, Grafana, Sentry, ELK']
+  },
+  {
+    title: 'Тестирование и качество',
+    skills: ['PHPUnit, Pest', 'PHPStan, Rector, PHP CS Fixer', 'Infection (mutation testing)', 'Code Review']
+  },
+  {
+    title: 'Frontend',
+    skills: ['Vue, Nuxt', 'TypeScript', 'Tailwind CSS']
+  },
+  {
+    title: 'Управление и процессы',
+    skills: ['Tech Lead / управление командой', 'Декомпозиция задач', 'Agile / Scrum', 'Менторство']
   }
 ]
 </script>
@@ -59,6 +97,24 @@ const socials = [
               <path :d="social.icon" />
             </svg>
           </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-12">
+      <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Технологии</h2>
+      <div class="mt-5 space-y-5">
+        <div v-for="group in skillGroups" :key="group.title">
+          <h3 class="text-sm font-medium text-slate-500 dark:text-slate-400">{{ group.title }}</h3>
+          <div class="mt-2 flex flex-wrap gap-2">
+            <span
+                v-for="skill in group.skills"
+                :key="skill"
+                class="rounded-full bg-brand-50 px-3 py-1 text-sm text-brand-700 dark:bg-brand-950 dark:text-brand-300"
+            >
+              {{ skill }}
+            </span>
+          </div>
         </div>
       </div>
     </div>
