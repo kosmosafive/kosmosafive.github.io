@@ -1,7 +1,8 @@
 <script setup lang="ts">
 const route = useRoute()
+const currentPath = route.path
 
-const { data: post } = await useAsyncData(`post-${route.path}`, () =>
+const { data: post } = await useAsyncData(`post-${currentPath}`, () =>
   queryCollection('blog').path(route.path).first()
 )
 
@@ -9,7 +10,7 @@ if (!post.value) {
   throw createError({ statusCode: 404, statusMessage: 'Статья не найдена' })
 }
 
-const { data: surround } = await useAsyncData(`surround-${route.path}`, () =>
+const { data: surround } = await useAsyncData(`surround-${currentPath}`, () =>
   queryCollectionItemSurroundings('blog', route.path, {
     fields: ['title', 'description']
   })
@@ -34,7 +35,7 @@ useHead({
   script: [
     {
       type: 'application/ld+json',
-      innerHTML: JSON.stringify({
+      innerHTML: () => JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'BlogPosting',
         'headline': post.value.title,
@@ -57,7 +58,7 @@ useHead({
         },
         'mainEntityOfPage': {
           '@type': 'WebPage',
-          '@id': `https://kosmosafive.github.io${useRoute().path}`
+          '@id': `https://kosmosafive.github.io${currentPath}`
         }
       })
     }
