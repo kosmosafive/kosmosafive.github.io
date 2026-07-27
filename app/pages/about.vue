@@ -43,7 +43,7 @@ const skillGroups = [
   },
   {
     title: 'Данные и хранилища',
-    skills: ['MySQL / MariaDB', 'PostgreSQL', 'ElasticSearch / OpenSearch', 'Redis', 'ClickHouse', 'ORM, миграции']
+    skills: ['MySQL / MariaDB', 'PostgreSQL', 'ElasticSearch / OpenSearch', 'Manticore Search', 'ChromaDB', 'Qdrant', 'Redis', 'ClickHouse', 'ORM, миграции']
   },
   {
     title: 'Интеграции и messaging',
@@ -51,7 +51,7 @@ const skillGroups = [
   },
   {
     title: 'DevOps и инфраструктура',
-    skills: ['Docker', 'CI/CD', 'Git', 'Nginx', 'Prometheus, Grafana, Sentry, ELK']
+    skills: ['Docker', 'CI/CD', 'Git', 'Nginx', 'Caddy', 'Prometheus, Grafana, Sentry, ELK']
   },
   {
     title: 'Тестирование и качество',
@@ -59,7 +59,7 @@ const skillGroups = [
   },
   {
     title: 'Frontend',
-    skills: ['Vue, Nuxt', 'TypeScript', 'Tailwind CSS']
+    skills: ['Vue, Nuxt', 'TypeScript', 'Tailwind CSS', 'Alphine.js']
   },
   {
     title: 'Управление и процессы',
