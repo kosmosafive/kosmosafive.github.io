@@ -1,0 +1,4 @@
+# Project exclude paths
+/.nuxt/
+/node_modules/
+/.idea/
