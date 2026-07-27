@@ -15,7 +15,7 @@ export default defineNuxtConfig({
   },
 
   app: {
-    baseURL: process.env.NUXT_APP_BASE_URL || '/',
+    baseURL: '/',
     head: {
       htmlAttrs: { lang: 'ru' },
       link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
