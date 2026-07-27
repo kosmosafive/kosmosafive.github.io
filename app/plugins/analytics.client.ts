@@ -1,6 +1,6 @@
 import { nextTick } from 'vue'
 
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin((nuxtApp: any) => {
     if (import.meta.dev || !import.meta.client) return
 
     const ymId = '111057313'
@@ -9,7 +9,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     window.ym = window.ym || function () {
         (window.ym.a = window.ym.a || []).push(arguments)
     }
-    window.ym.l = 1 * new Date()
+    window.ym.l = +new Date()
 
     const ymScript = document.createElement('script')
     ymScript.async = true

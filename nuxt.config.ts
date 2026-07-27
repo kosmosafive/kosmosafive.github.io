@@ -18,7 +18,7 @@ export default defineNuxtConfig({
     baseURL: process.env.NUXT_APP_BASE_URL || '/',
     head: {
       htmlAttrs: { lang: 'ru' },
-      link: [{ rel: 'icon', type: 'image/svg+xml', href: 'favicon.svg' }],
+      link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
       script: [
         {
           innerHTML: `
@@ -51,7 +51,7 @@ export default defineNuxtConfig({
           },
           langs: [
             'js', 'ts', 'jsx', 'tsx', 'vue', 'html', 'css',
-            'php', 'bash', 'json', 'yaml', 'sql', 'python', 'go', 'md'
+            'php', 'bash', 'json', 'yaml', 'sql', 'python', 'go', 'md', 'xml'
           ]
         }
       }

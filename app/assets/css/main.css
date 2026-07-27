@@ -32,7 +32,7 @@ body {
 
 /* Prose overrides for rendered markdown content */
 .prose :where(pre) {
-  @apply rounded-xl border border-slate-200 dark:border-slate-800;
+  @apply rounded-xl border border-slate-200 bg-slate-50 p-4 text-slate-800 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200;
 }
 
 .prose :where(code):not(pre code) {
