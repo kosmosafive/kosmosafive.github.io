@@ -1,19 +1,19 @@
 <script setup lang="ts">
 const route = useRoute()
-const currentPath = route.path
+const path = route.path.length > 1 ? route.path.replace(/\/+$/, '') : route.path
 
-const { data: post } = await useAsyncData(`post-${currentPath}`, () =>
-  queryCollection('blog').path(route.path).first()
+const { data: post } = await useAsyncData(`post-${path}`, () =>
+    queryCollection('blog').path(path).first()
 )
 
 if (!post.value) {
   throw createError({ statusCode: 404, statusMessage: 'Статья не найдена' })
 }
 
-const { data: surround } = await useAsyncData(`surround-${currentPath}`, () =>
-  queryCollectionItemSurroundings('blog', route.path, {
-    fields: ['title', 'description']
-  })
+const { data: surround } = await useAsyncData(`surround-${path}`, () =>
+    queryCollectionItemSurroundings('blog', path, {
+      fields: ['title', 'description']
+    })
 )
 
 useSeoMeta({
@@ -31,7 +31,7 @@ function formatDate(date: string) {
   })
 }
 
-/*useHead({
+useHead({
   script: [
     {
       type: 'application/ld+json',
@@ -58,12 +58,12 @@ function formatDate(date: string) {
         },
         'mainEntityOfPage': {
           '@type': 'WebPage',
-          '@id': `https://kosmosafive.github.io${currentPath}`
+          '@id': `https://kosmosafive.github.io${path}`
         }
       })
     }
   ]
-})*/
+})
 </script>
 
 <template>
