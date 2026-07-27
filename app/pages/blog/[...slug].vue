@@ -31,7 +31,7 @@ function formatDate(date: string) {
   })
 }
 
-useHead({
+/*useHead({
   script: [
     {
       type: 'application/ld+json',
@@ -63,7 +63,7 @@ useHead({
       })
     }
   ]
-})
+})*/
 </script>
 
 <template>
