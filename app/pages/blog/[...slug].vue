@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import PostComments from "../../components/PostComments.vue";
+
 const route = useRoute()
 const path = route.path.length > 1 ? route.path.replace(/\/+$/, '') : route.path
 
@@ -118,5 +120,7 @@ useHead({
         <p class="mt-1 font-medium">{{ surround[1].title }}</p>
       </NuxtLink>
     </nav>
+
+    <PostComments></PostComments>
   </article>
 </template>

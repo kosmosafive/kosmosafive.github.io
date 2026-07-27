@@ -1,0 +1,21 @@
+<template>
+  <div class="mt-10 border-t pt-6">
+    <component
+        :is="'script'"
+        src="https://giscus.app/client.js"
+        data-repo="kosmosafive/kosmosafive.github.io"
+        data-repo-id="R_kgDOTksExA"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOTksExM4DCEcY"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="1"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="ru"
+        crossorigin="anonymous"
+        async
+    />
+  </div>
+</template>
