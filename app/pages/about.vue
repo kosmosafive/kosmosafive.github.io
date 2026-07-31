@@ -7,7 +7,7 @@ useSeoMeta({
 const profile = {
   name: 'Siarhei Buinevich',
   role: 'Web developer',
-  avatar: '/avatar.png',
+  avatar: 'https://avatars.githubusercontent.com/u/14090839',
   bio: 'Более 10 лет в backend-разработке: от интернет-магазинов и корпоративных порталов до микросервисов, интегрированных с SAP, CRM и внешними API промышленных и логистических компаний.'
 }
 
