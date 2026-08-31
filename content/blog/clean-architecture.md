@@ -7,18 +7,6 @@ tags: ["architecture", "pattern", "php"]
 draft: false
 ---
 
-* [Введение](#введение)
-* [Фундаментальные принципы](#фундаментальные-принципы)
-* [Слои Архитектуры и Структура Директорий](#слои-архитектуры-и-структура-директорий)
-* * [1. Domain Layer (Ядро / Сущности)](#_1-domain-layer-ядро-сущности)
-* * [2. Application Layer (Сценарии использования)](#%EF%B8%8F-2-application-layer-сценарии-использования)
-* * [3. Infrastructure Layer (Инфраструктура)](#_3-infrastructure-layer-детали-реализации)
-* * [4. Presentation Layer (Представление)](#%EF%B8%8F-4-presentation-layer-точки-входа)
-* * [Поток зависимостей и данных](#поток-зависимостей-и-данных)
-* [Ключевые паттерны и концепции](#ключевые-паттерны-и-концепции)
-* [Плюсы и Минусы подхода](#%EF%B8%8F-плюсы-и-минусы-подхода)
-* [Чек-лист для Code Review](#%EF%B8%8F-чек-лист-для-code-review)
-
 ## Введение
 
 **Clean Architecture** (Чистая Архитектура) — это архитектурный подход, предложенный Робертом Мартином (Uncle Bob), который объединяет идеи Hexagonal Architecture (Порты и Адаптеры), Onion Architecture и Screaming Architecture.
@@ -69,27 +57,32 @@ src/
  │       └── UserAlreadyExistsException.php # Пример: OutdatedDataException, InvalidOrderException
  │
  ├── Application/                         # ⚙️ СЦЕНАРИИ ИСПОЛЬЗОВАНИЯ (Оркестрация, зависит от Domain)
- │   ├── Command/                         # DTO команд (Readonly-классы, иммутабельные)
- │   │   └── CreateUserCommand.php        # Пример: CreateUserCommand, ProcessOrderCommand
+ │   ├── Port/                            # Общие интерфейсы Application-слоя (DeeplinkGeneratorInterface)
+ │   ├── Common/                          # Общие утилиты (Pagination, DateTime)
  │   │
- │   ├── CommandHandler/                  # Обработчики команд (Use Cases)
- │   │   ├── CreateUserHandler.php        # Пример: CreateUserHandler, ProcessOrderHandler
- │   │   └── ProcessOrderHandler.php      # Содержат бизнес-логику, вызывают сервисы и репозитории
+ │   ├── Voting/                          # Модуль по доменной области (bounded context)
+ │   │   ├── Command/                     # DTO команд (readonly)
+ │   │   ├── CommandHandler/              # Синхронные обработчики команд (__invoke)
+ │   │   ├── Message/                     # Асинхронные сообщения для Messenger
+ │   │   ├── MessageHandler/              # Consumer'ы очередей (#[AsMessageHandler])
+ │   │   └── DTO/                         # Выходные DTO модуля
  │   │
- │   ├── Query/                           # DTO запросов (для CQRS, если используется)
- │   │   └── GetUserQuery.php             # Пример: GetUserQuery, ListOrdersQuery
+ │   ├── Season/                          # Аналогичная структура для других модулей
+ │   │   ├── Command/
+ │   │   ├── CommandHandler/
+ │   │   ├── Query/
+ │   │   ├── QueryHandler/
+ │   │   └── DTO/
  │   │
- │   ├── QueryHandler/                    # Обработчики запросов (для CQRS)
- │   │   └── GetUserHandler.php           # Пример: GetUserHandler, ListOrdersHandler
- │   │
- │   ├── DTO/                             # Выходные DTO (если отличаются от Domain DTO)
- │   │   └── UserResponseDTO.php          # Пример: UserResponseDTO, OrderSummaryDTO
- │   │
- │   ├── Port/                            # Интерфейсы для внешних сервисов (специфичных для Application)
- │   │   └── NotificationPortInterface.php # Пример: NotificationPortInterface, CachePortInterface
- │   │
- │   └── Exception/                       # Исключения уровня приложения
- │       └── UserNotFoundException.php     # Пример: EmployeeNotFoundException, OrderNotFoundException
+ │   └── Bot/
+ │       ├── Command/                     # (если есть CQRS-команды)
+ │       ├── CommandHandler/
+ │       ├── Message/
+ │       ├── MessageHandler/
+ │       └── DTO/
+ │
+ │   # ⚠️ Не используйте папки UseCase/, Service/ для CQRS-обработчиков.
+ │   # CommandHandler/ + QueryHandler/ — стандарт проекта.
  │
  ├── Infrastructure/                      # 🔌 ДЕТАЛИ РЕАЛИЗАЦИИ (Здесь живет фреймворк, БД, API)
  │   ├── Persistence/                     # Работа с базой данных
@@ -201,10 +194,13 @@ src/
 Содержит **бизнес-логику уровня приложения** (Application Business Rules). Отвечает за как использовать Domain для выполнения конкретных сценариев (Use Cases).
 
 **Состав:**
-* `UseCase/` или `CommandHandler/` — Обработчики команд/сценариев. Координируют процесс.
-* `Command/` или `DTO/` — Входные/выходные данные для сценариев (readonly-классы).
-* `Exception/` — Исключения уровня приложения (напр., EmployeeNotFoundException).
-* `Port/` или `Service/` — Интерфейсы для внешних сервисов, специфичных для сценариев.
+* Модули по доменным областям (`Voting/`, `Season/`, `Statistics/`, `Bot/`) — каждый содержит свои Command, Query, Handler, DTO
+* `Command/` + `CommandHandler/` — синхронные use case, изменяющие состояние
+* `Query/` + `QueryHandler/` — операции чтения
+* `Message/` + `MessageHandler/` — асинхронная обработка через Symfony Messenger (не путать с CQRS Handler!)
+* `Port/` — общие интерфейсы Application-слоя (имена `*Interface`, не `*Port`)
+* `DTO/` — выходные объекты модулей
+* `Exception/` — исключения уровня приложения (напр., EmployeeNotFoundException)
 
 **📋 Правила:**
 
@@ -253,6 +249,8 @@ src/
 **Состав:**
 
 * `Http/Controller/` — HTTP контроллеры (REST, GraphQL).
+* `Http/Factory/` — маппинг Request DTO → Command/Query (для сложных случаев).
+* `Http/DTO/Request/` — HTTP Request DTO с Symfony Validator constraints.
 * `Console/Command/` — CLI-команды (бизнес-ориентированные).
 * `Listener/` — Обработчики событий фреймворка.
 * `Middleware/` — Проверки авторизации, валидация запросов.
@@ -308,7 +306,7 @@ src/
 ## 💡 Ключевые паттерны и концепции
 
 ### 1. Разделение Entity и Model (ORM)
-   
+
 Это частая ошибка — использовать ORM-модели как бизнес-сущности.
 
 *    **Domain Entity:** Богатая модель, содержит бизнес-инварианты (например, `User->block()` проверяет правила блокировки). Не имеет аннотаций `#[ORM\Column]`.
@@ -316,7 +314,7 @@ src/
 *    **Mapper:** Класс, который переводит Domain Entity ↔ Infrastructure Model.
 
 ### 2. Порты и Адаптеры в PHP (Ports and Adapters)
-   
+
 Архитектурный паттерн Ports and Adapters (Hexagonal Architecture) универсален, но PHP-сообщество исторически не использует слово Port в нейминге классов и директорий. Вместо этого применяются более описательные названия, отражающие суть контракта.
 
 В PHP:

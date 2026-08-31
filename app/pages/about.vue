@@ -59,7 +59,7 @@ const skillGroups = [
   },
   {
     title: 'Frontend',
-    skills: ['Vue, Nuxt', 'TypeScript', 'Tailwind CSS', 'Alphine.js']
+    skills: ['Vue, Nuxt', 'TypeScript', 'Tailwind CSS', 'Alpine.js']
   },
   {
     title: 'Управление и процессы',

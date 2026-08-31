@@ -42,3 +42,12 @@ body {
 .prose :where(a) {
   @apply text-brand-600 dark:text-brand-400 no-underline hover:underline;
 }
+
+.prose :where(h2, h3, h4) > a {
+  @apply text-inherit no-underline;
+}
+
+.prose :where(h2, h3, h4):hover > a::before {
+  content: '#';
+  @apply mr-2 text-brand-400 opacity-100 transition-opacity;
+}

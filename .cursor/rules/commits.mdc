@@ -1,0 +1,14 @@
+---
+description: Коммиты по Conventional Commits проекта. При запросе коммита или завершения feature — использовать skill commit-convention.
+alwaysApply: true
+---
+
+# Коммиты
+
+Стандарт проекта: `docs/commit_convention.md`.
+
+При формировании сообщения коммита, коммите изменений или завершении feature-ветки (squash) — **прочитай и следуй skill `commit-convention`** (`@commit-convention`).
+
+Кратко: `<тип>(<область>): [<задача>] <описание на английском>`.
+
+Коммит и squash выполняй только когда пользователь явно попросил.

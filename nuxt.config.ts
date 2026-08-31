@@ -10,7 +10,7 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: true,
-      routes: ['/']
+      routes: ['/', '/feed.xml']
     }
   },
 
@@ -18,7 +18,16 @@ export default defineNuxtConfig({
     baseURL: process.env.NUXT_APP_BASE_URL || '/',
     head: {
       htmlAttrs: { lang: 'ru' },
-      link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
+      link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+        { rel: 'alternate', type: 'application/rss+xml', title: 'RSS', href: '/feed.xml' },
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap'
+        }
+      ],
       script: [
         {
           innerHTML: `
@@ -42,8 +51,15 @@ export default defineNuxtConfig({
   },
 
   content: {
+    experimental: {
+      sqliteConnector: 'native'
+    },
     build: {
       markdown: {
+        toc: {
+          depth: 3,
+          searchDepth: 3
+        },
         highlight: {
           theme: {
             default: 'github-light',

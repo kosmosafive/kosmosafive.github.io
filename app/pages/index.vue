@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { DEFAULT_OG_IMAGE } from '~/utils/site'
+
 const { data: posts } = await useAsyncData('posts-list', () =>
   queryCollection('blog')
     .where('draft', '=', false)
@@ -13,7 +15,8 @@ const categories = computed(() => {
 
 useSeoMeta({
   title: 'dev/blog — статьи о веб-разработке',
-  description: 'Технические заметки о фронтенде, бэкенде и инструментах веб-разработчика.'
+  description: 'Технические заметки о фронтенде, бэкенде и инструментах веб-разработчика.',
+  ogImage: DEFAULT_OG_IMAGE
 })
 </script>
 
