@@ -37,6 +37,7 @@ description: "Краткое описание для SEO и карточки"
 date: 2026-08-31
 category: "Backend"
 tags: ["php", "architecture"]
+cover: "/covers/my-article.webp"
 draft: false
 ---
 ```

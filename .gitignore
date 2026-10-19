@@ -1,7 +1,9 @@
 # Project exclude paths
+/extra/
 /.nuxt/
 /node_modules/
 /.idea/
 /dist
 /.output/
 /.data/
+/.cursor/

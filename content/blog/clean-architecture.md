@@ -4,6 +4,7 @@ description: "Главная цель Чистой архитектуры: со�
 date: 2026-07-22
 category: "Backend"
 tags: ["architecture", "pattern", "php"]
+cover: "/covers/clean-architecture.webp"
 draft: false
 ---
 

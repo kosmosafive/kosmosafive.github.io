@@ -43,7 +43,12 @@ useSeoMeta({
     </div>
 
     <div v-if="posts?.length">
-      <PostCard v-for="post in posts" :key="post.path" :post="post" />
+      <PostCard
+        v-for="(post, index) in posts"
+        :key="post.path"
+        :post="post"
+        :priority="index === 0"
+      />
     </div>
     <p v-else class="text-slate-500">Пока здесь пусто — первая статья скоро появится.</p>
   </div>

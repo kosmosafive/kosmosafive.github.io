@@ -44,7 +44,7 @@ export default defineNuxtConfig({
     }
   },
 
-  css: ['~/assets/css/main.css'],
+  css: ['~/assets/css/main.css', 'katex/dist/katex.min.css'],
 
   vite: {
     plugins: [tailwindcss()]
@@ -56,6 +56,12 @@ export default defineNuxtConfig({
     },
     build: {
       markdown: {
+        remarkPlugins: {
+          'remark-math': {}
+        },
+        rehypePlugins: {
+          'rehype-katex': {}
+        },
         toc: {
           depth: 3,
           searchDepth: 3

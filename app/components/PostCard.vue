@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { COVER_HEIGHT, COVER_WIDTH } from '~/utils/site'
+
 defineProps<{
+  priority?: boolean
   post: {
     path: string
     title: string
@@ -7,6 +10,7 @@ defineProps<{
     date: string
     category?: string
     tags?: string[]
+    cover?: string
   }
 }>()
 
@@ -33,7 +37,18 @@ function formatDate(date: string) {
     </div>
 
     <NuxtLink :to="post.path" class="block">
-      <h2 class="mt-1 text-xl font-semibold text-slate-900 group-hover:text-brand-600 dark:text-white dark:group-hover:text-brand-400">
+      <img
+        v-if="post.cover"
+        :src="post.cover"
+        alt=""
+        :width="COVER_WIDTH"
+        :height="COVER_HEIGHT"
+        class="mt-3 w-full rounded-xl border border-slate-200 dark:border-slate-800"
+        :fetchpriority="priority ? 'high' : undefined"
+        :loading="priority ? undefined : 'lazy'"
+        decoding="async"
+      >
+      <h2 class="mt-3 text-xl font-semibold text-slate-900 group-hover:text-brand-600 dark:text-white dark:group-hover:text-brand-400">
         {{ post.title }}
       </h2>
       <p class="mt-2 text-slate-600 dark:text-slate-400">{{ post.description }}</p>

@@ -4,6 +4,7 @@ description: "Архитектурный паттерн, который разд
 date: 2026-08-07
 category: "Backend"
 tags: ["architecture", "pattern", "php"]
+cover: "/covers/cqrs.webp"
 draft: false
 ---
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import PostComments from '../../components/PostComments.vue'
-import { absoluteUrl, DEFAULT_OG_IMAGE } from '~/utils/site'
+import { absoluteUrl, COVER_HEIGHT, COVER_WIDTH, DEFAULT_OG_IMAGE } from '~/utils/site'
 import { estimateReadingTime, formatReadingTime } from '~/utils/reading-time'
 
 definePageMeta({ layout: 'article' })
@@ -48,6 +48,8 @@ useSeoMeta({
   ogTitle: post.value.title,
   ogDescription: post.value.description,
   ogImage: ogImage,
+  ogImageWidth: post.value?.cover ? COVER_WIDTH : undefined,
+  ogImageHeight: post.value?.cover ? COVER_HEIGHT : undefined,
   ogUrl: canonicalUrl,
   twitterCard: 'summary_large_image'
 })
@@ -129,6 +131,16 @@ function formatDate(date: string) {
             #{{ tag }}
           </NuxtLink>
         </div>
+        <img
+          v-if="post.cover"
+          :src="post.cover"
+          :alt="post.title"
+          :width="COVER_WIDTH"
+          :height="COVER_HEIGHT"
+          class="mt-6 w-full rounded-xl border border-slate-200 dark:border-slate-800"
+          fetchpriority="high"
+          decoding="async"
+        >
       </header>
 
       <ContentRenderer :value="post" class="prose prose-slate max-w-none dark:prose-invert" />

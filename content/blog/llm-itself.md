@@ -4,6 +4,7 @@ description: "Практическое руководство по больши�
 date: 2026-07-23
 category: "AI"
 tags: ["llm", "ai", "prompt", "php"]
+cover: "/covers/llm-itself.webp"
 draft: false
 ---
 
